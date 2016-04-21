@@ -11,9 +11,10 @@ prop_EnergyConservation  w = isEnergyConserved w
 
 
 isEnergyConserved :: World -> Bool
-isEnergyConserved w@(World _ _ _ _) = abs (realToFrac energyDiff) < World.epsilon
+isEnergyConserved w = (realToFrac (energyDiff/oldEnergy)) < World.epsilon
   where
-    energyDiff =  (worldEnergy w) - worldEnergy (advanceWorld "" (0.001) w)
+    oldEnergy = worldEnergy w
+    energyDiff =  abs (oldEnergy - worldEnergy (advanceWorld "" (0.001) w))
 
 
 
